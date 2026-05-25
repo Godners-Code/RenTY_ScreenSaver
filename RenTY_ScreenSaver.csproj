@@ -6,6 +6,61 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <StartupObject>RTYSS.Program</StartupObject>
+    <AssemblyName>RenTY ScreenSaver</AssemblyName>
+    <RootNamespace>RTYSS</RootNamespace>
+    <ApplicationIcon>WinSS.ico</ApplicationIcon>
+    <Authors>RenTY ScreenSaver</Authors>
+    <Company>RenTY Code</Company>
+    <Product>RenTY ScreenSaver</Product>
+    <Description>RenTY ScreenSaver</Description>
+    <Copyright>Copyright (c) 2026 Godners Code. All rights reserved.</Copyright>
+    <RepositoryUrl>https://github.com/Godners-Code/RenTY_ScreenSaver</RepositoryUrl>
+    <PackageIcon>RTYSS.jpg</PackageIcon>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageId>RenTY ScreenSaver</PackageId>
+    <Title>RenTY ScreenSaver</Title>
+    <PackageProjectUrl>https://github.com/Godners-Code/RenTY_ScreenSaver</PackageProjectUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="WinSS.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="RTYSS.jpg">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>

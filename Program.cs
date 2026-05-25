@@ -1,17 +1,25 @@
-namespace RenTY_ScreenSaver
+namespace RTYSS
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
+        
+        
+        internal static readonly Screens Monitor = new();
+        internal static List<WinSS> FormSS = [];
         [STAThread]
-        static void Main()
+        internal static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new WinSS());
+            Application.SetHighDpiMode(HighDpiMode.DpiUnaware);
+            ApplicationConfiguration.Initialize(); Int32 ID = 0;
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            for (ID = 0; ID < Monitor.Count; ID++)
+            {
+                FormSS.Add(new WinSS(ID)); FormSS[ID].Show();
+                FormSS[ID].FormClosed += (O, E) => Application.Exit();
+            }
+            Application.Run();
+
         }
     }
 }
