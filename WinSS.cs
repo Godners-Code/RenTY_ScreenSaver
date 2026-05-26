@@ -20,7 +20,7 @@ namespace RTYSS
             InitializeComponent(); this.ID = ID; ReDraw(); LD.Text = LL;
             TD.Enabled = true; TH.Enabled = true; TS.Enabled = true;
         }
-        private Rectangle MB(Int32 ID) => Program.Monitor[ID].Bounds;
+        private static Rectangle MB(Int32 ID) => Program.Monitor[ID].Bounds;
         private void ReDraw()
         {
             Size = MB(ID).Size; Location = MB(ID).Location; Text = $"{TT}{ID}"; LD.Font = LF; LT.Font = LF;
