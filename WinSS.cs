@@ -1,6 +1,6 @@
 using System.Globalization;
-using static System.Math;
 using static System.DateTime;
+using static System.Math;
 
 namespace RTYSS
 {
@@ -11,55 +11,37 @@ namespace RTYSS
         private const GraphicsUnit GU = GraphicsUnit.Pixel;
         private const ContentAlignment MC = ContentAlignment.MiddleCenter,
             TC = ContentAlignment.TopCenter, BC = ContentAlignment.BottomCenter;
-        private const String FN = "Consolas", DF = "yyyy-MM-dd  ddd", TF = "HH:mm:ss.ff zz";
-
-        private CultureInfo CI = new CultureInfo(1033);
+        private const String FN = "Consolas", DF = "yyyy-MM-dd  ddd", TF = "HH:mm:ss.ff zz",
+            TT = "RenTY ScreenSaver - ";
+        private readonly CultureInfo CI = new(1033);
         internal Int32 ID = 0;
         internal WinSS(Int32 ID)
         {
-            InitializeComponent(); this.ID = ID; ReDraw();
-            LDate.Text = LL; TmrSS.Enabled = true;
+            InitializeComponent(); this.ID = ID; ReDraw(); LD.Text = LL;
+            TD.Enabled = true; TH.Enabled = true; TS.Enabled = true;
         }
+        private Rectangle MB(Int32 ID) => Program.Monitor[ID].Bounds;
         private void ReDraw()
         {
-            // Size = Program.Monitor[ID].Bounds.Size;
-            Size = Program.Monitor[ID].WorkingArea.Size;
-            Location = Program.Monitor[ID].Bounds.Location;
-            Text = $"RenTY ScreenSaver - {ID}";
-            LDate.Font = LF(); LTime.Font = LF();
-            LDate.TextAlign = Width > Height ? MC : BC;
-            LTime.TextAlign = Width > Height ? MC : TC;
+            Size = MB(ID).Size; Location = MB(ID).Location; Text = $"{TT}{ID}"; LD.Font = LF; LT.Font = LF;
+            LD.TextAlign = Width > Height ? MC : BC; LT.TextAlign = Width > Height ? MC : TC;
+            LI.Text = Str.LID_S(ID); LI.Font = Str.LID_F(LI, TLP); LE.Font = Str.LE_F(LE);
+            LA.Font = Str.LA_F(LA, TLP); LV.Text = Str.LV_S(Hue, Saturation, BackColor, ForeColor);
+            LV.Font = Str.LV_F(LV, TLP);
         }
-        private Int32 LW => LDate.Width; private Int32 LH => LDate.Height;
-        private Font LF() => new(FN, Min(LW * FR / 15F, LH * FR), FS, GU);
+        private Int32 LW => LD.Width; private Int32 LH => LD.Height;
+        private Font LF => new(FN, Min(LW * FR / 15F, LH * FR), FS, GU);
         private String LL => Now.ToString(DF, CI).ToUpper();
-        private void OnTick(Object O, EventArgs E) { ReTime(); ReColor(); }
+        private void DrawTick(Object O, EventArgs E) { ReTime(); ReColor(); }
         private void ReTime()
-        { 
-            String L = LL; if (LDate.Text != L) LDate.Text = L; LTime.Text = Now.ToString(TF);
-
-            /*
-            1、右下角显示屏幕编号、分辨率
-            2、左下角显示About信息
-            */
-        }
-        private void ReColor()
         {
-            /*
-            1、N个屏幕，将HSV色彩模型N等分；
-            2、取一[0, 360]随机数，作为第一个屏幕颜色的起点，其余屏幕按N等分顺延
-            3、文字色按照H对边色
-            4、V值始终取100%
-            5、S值在[80%, 100%]间往返
-            6、S值、H值周期相同
-            7、S值完成往返后，H值切换顺时针/逆时针旋转
-
-            8、默认初始速度，鼠标滚轮调节整体速度
-            9、左上角显示前景色（RGB、HSV）、背景色（RGB、HSV）、速度（H角速度、S往返Hz频率）
-            10、左上角限时退出按钮
-            
-            */
-
+            String L = LL; if (LD.Text != L) LD.Text = L; LT.Text = Now.ToString(TF);
+            LV.Text = Str.LV_S(Hue, Saturation, BackColor, ForeColor);
         }
+        private Double Hue = 0D, Saturation = 1D;
+        private void HueTick(Object O, EventArgs E) => Hue = Now.Second * 6D + Now.Millisecond / 100D;
+        private void SaturationTick(Object O, EventArgs E) => Saturation = Round(Now.Second / 300D + 0.8D, 4);
+        private void ReColor() => (BackColor, ForeColor) = Clr.Pair(Hue, Saturation, 1);
+        private void LExit_Click(Object O, EventArgs E) => Application.Exit();
     }
 }

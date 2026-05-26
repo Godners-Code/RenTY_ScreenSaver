@@ -2,9 +2,7 @@ namespace RTYSS
 {
     internal static class Program
     {
-        
-        
-        internal static readonly Screens Monitor = new();
+        internal static readonly Scr Monitor = new();
         internal static List<WinSS> FormSS = [];
         [STAThread]
         internal static void Main()
@@ -19,7 +17,6 @@ namespace RTYSS
                 FormSS[ID].FormClosed += (O, E) => Application.Exit();
             }
             Application.Run();
-
         }
     }
 }
